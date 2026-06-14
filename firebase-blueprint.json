@@ -1,0 +1,111 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "email", "role", "createdAt"]
+    },
+    "Anime": {
+      "title": "Anime",
+      "description": "Anime show data",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "posterUrl": { "type": "string" },
+        "bannerUrl": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "rating": { "type": "string" },
+        "releaseYear": { "type": "string" },
+        "language": { "type": "string" },
+        "status": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "description", "category", "createdAt"]
+    },
+    "Episode": {
+      "title": "Episode",
+      "description": "Anime episode data",
+      "type": "object",
+      "properties": {
+        "animeId": { "type": "string" },
+        "episodeNumber": { "type": "number" },
+        "episodeTitle": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "duration": { "type": "string" },
+        "language": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["animeId", "episodeNumber", "episodeTitle", "createdAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Anime category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "createdAt"]
+    },
+    "WatchHistory": {
+      "title": "WatchHistory",
+      "description": "User watch history item",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "animeId": { "type": "string" },
+        "episodeId": { "type": "string" },
+        "watchedAt": { "type": "string" }
+      },
+      "required": ["userId", "animeId", "episodeId", "watchedAt"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "User favorite anime",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "animeId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "animeId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles"
+    },
+    "/anime/{animeId}": {
+      "schema": { "$ref": "#/entities/Anime" },
+      "description": "Stores anime shows"
+    },
+    "/episodes/{episodeId}": {
+      "schema": { "$ref": "#/entities/Episode" },
+      "description": "Stores all episodes"
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Stores all categories"
+    },
+    "/users/{userId}/watchHistory/{historyId}": {
+      "schema": { "$ref": "#/entities/WatchHistory" },
+      "description": "User watch history subcollection"
+    },
+    "/users/{userId}/favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/Favorite" },
+      "description": "User favorites subcollection"
+    }
+  }
+}
